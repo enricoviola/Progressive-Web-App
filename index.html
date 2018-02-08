@@ -6,11 +6,10 @@
   </head>
 
   <body>
-    <h1>Registrazione e Installazione di Service Worker Step 2</h1>
-    <p>I service Workers necessitano di una connessione HTTPS (per questioni di Sicurezza).</p>
-    <p>Comunque funzionano anche su <code>localhost</code> per questioni di sviluppo.</p>
-    <p>Per verificare che i servizi in background dei Service Worker sono stati attivati andare su <code>chrome://inspect/#service-workers</code> in Chrome DevTool (oppure in <code>Application -> Service Workers)</code></p>
-    <p>Per verificare l'installazione e attivazione dei Service Workers su DevTool, andare su <code>Application -> Clear Storage -> Clear Site Data</code> perché una volta installati la prima volta gli eventi <code>install</code> e <code>activate</code> non vengono più catturati</p>
+    <h1>Cache Files with Service Workers</h1>
+    <p>Dopo l'Installazione dei Service Worker Step indichiamo quali risorse inserire in cache</p>
+    <p>Se tutte le risorse vengono adeguatamente inserite in cache, dopo il Service Worker viene installato. In caso di solo 1 fallimento di download in cache, il passaggio d'installazione fallisce.</p>
+    <p>Quindi Occhio alla lista inserita, sia per motivi di spazio e performance sia per il maggiore rischio fallimento in caso di più files.</p>
   </body>
 
 </html>
