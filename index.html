@@ -2,12 +2,15 @@
 <html>
 
   <head>
-    <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
 
   <body>
     <h1>Registrazione e Installazione di Service Worker</h1>
+    <p>I service Workers necessitano di una connessione HTTPS (per questioni di Sicurezza).</p>
+    <p>Comunque funzionano anche su <code>localhost</code> per questioni di sviluppo.</p>
+    <p>Per verificare che i servizi in background dei Service Worker sono stati attivati andare su <code>chrome://inspect/#service-workers</code> in Chrome DevTool (oppure in <code>Application -> Service Workers)</code></p>
+    <p>Per verificare l'installazione e attivazione dei Service Workers su DevTool, andare su <code>Application -> Clear Storage -> Clear Site Data</code> perché una volta installati la prima volta gli eventi <code>install</code> e <code>activate</code> non vengono più catturati</p>
   </body>
 
 </html>
