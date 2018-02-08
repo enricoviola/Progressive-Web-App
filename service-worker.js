@@ -93,6 +93,7 @@ function requestBackend(event){
 // li scaricherà nuovamente. L'evento di installazione nel nuovo service worker verrà generato ma entrerà nella fase di 'attesa' in quanto
 // la pagina sarà ancora controllata dal vecchio Service Worker. 
 // 2) Quando tutte le istanze del tuo sito Web sono chiuse, il nuovo Service Worker prenderà il controllo al posto del precedente.
+// Si intende qui che nel caso di più finestre aperte nel nostro browser, finché Tutte non verranno ricaricate, il nuovo Service Worker rimarrà in attesa
 // 3) A questo punto verrà attivato l'evento di installazione e qui sarà necessario eseguire una gestione della cache.
 
 self.addEventListener('activate', function(event) {
