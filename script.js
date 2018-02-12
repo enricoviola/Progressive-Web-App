@@ -20,7 +20,6 @@
     alert('No service worker support in this browser');
   }
 
-
   var statement = 'select * from weather.forecast where woeid=' + '2459115'; // NY
   var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' + statement;
   
@@ -60,44 +59,40 @@
       }
     };
 
+// Verifichiamo inizialmente se il service worker ha già in cache il valore meteo, in caso lo visualizziamo, mentre l'app cerca di recuperare i dati più recenti online
 
   if ('caches' in window) {
-    /*
-     * Check if the service worker has already cached this city's weather
-     * data. If the service worker has the data, then display the cached
-     * data while the app fetches the latest data.
-     */
       caches.match(url).then(function(response) {
           if (response) {
               response.json().then(function updateFromCache(json) {
                   var results = json.query.results;
                   results.label = results.channel.title;
                   results.created = json.query.created;
-                  console.log("Dentro Cache", results.label, results.created);
+                  console.log("Dai estrapolati dalla Cache", results.label, results.created);
                   updateForecastCard(results);
               });
           }
       });
   }
 
+// Andiamo a recuperare i dati Meteo online non in cache
 
-  // Fetch the latest data.
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
     if (request.readyState === XMLHttpRequest.DONE) {
-      if (request.status === 200) {
-        var response = JSON.parse(request.response);
-        var results = response.query.results;
-        results.label = results.channel.title;
-        results.created = response.query.created;
-        updateForecastCard(results);
+        if (request.status === 200) {
+          var response = JSON.parse(request.response);
+          var results = response.query.results;
+          results.label = results.channel.title;
+          results.created = response.query.created;
+          updateForecastCard(results);
+      } else {
+        // Ritorna i dati iniziali se non sono avviabili quelli online.
+        updateForecastCard(initialWeatherForecast);
       }
-    } else {
-      // Return the initial weather forecast since no data is available.
-      updateForecastCard(initialWeatherForecast);
     }
   };
-  request.open('GET', url);
+  request.open('GET', url, true);
   request.send();
 
   function updateForecastCard(data) {
@@ -111,6 +106,11 @@
     var wind = data.channel.wind;
 
     console.log("Meteo", lastBuildDate, title, current, humidity, wind);
+
+    // Visualizziamo i dati nella pagina HTML
+    var parentMeteo = document.getElementById('meteo');
+    var childMEteo = '<p>Riga Meteo: ' + lastBuildDate + ' - ' + title + '</p>';
+    parentMeteo.insertAdjacentHTML('beforeend', childMEteo);
   }
 
 })();

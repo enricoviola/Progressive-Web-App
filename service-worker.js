@@ -1,6 +1,8 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
+  '/index.html',
+  '/script.js',
   '/img/srilanka.jpg',
   '/img/petra.jpg',
   '/styles/style.css',
@@ -56,36 +58,6 @@ self.addEventListener('fetch', function(e) {
     // Se la richiesta URL fornisce dataUrl, la nostra app richiederà dati meteo aggiornati, quindi li recupera dalla rete e li salverà in cache.
       console.log('0 [Service Worker] Fetch', e.request.url);
     if (e.request.url.indexOf(dataUrl) > -1) {
-      console.log('1 [Service Worker] Fetch', e.request.url);
-
-      // Adatto per il Contenuto che si aggiorna frequentemente.
-      // L'idea è di mostrare prima i dati memorizzati nella cache, quindi aggiornare la pagina quando / se i dati di rete arrivano.
-      
-      /*
-      e.respondWith(
-        caches.open(dataCacheName).then(function(cache){
-        
-        // Necessaria la clonazione, poiché tale richiesta può essere consumata 1 sola volta, qui ci serve 2 volte sia per richiederla alla cache sia alla rete
-        var url = e.request.clone();
-        
-        return fetch(url).then(function(res){
-          // if not a valid response send the error
-          if(!res || res.status !== 200 || res.type !== 'basic'){
-              return res;
-        }
-
-        // Necessaria anche qui la clonazione per lo stesso motivo della richiesta
-        var response = res.clone();
-
-          cache.put(e.request.url, response);
-          return response;
-          console.log("requestBackend3", event.request, response);
-        });
-
-      })
-    );
-
-*/
 
 e.respondWith(
   caches.open(dataCacheName).then(function(cache) {
@@ -96,7 +68,6 @@ e.respondWith(
   })
 );
   } else {
-    console.log('2 [Service Worker] Fetch', e.request.url);
     
     // Questo ti dà il comportamento "Solo cache" per le cose nella cache e il comportamento "Solo rete" per tutto ciò che non è memorizzato nella cache
 
