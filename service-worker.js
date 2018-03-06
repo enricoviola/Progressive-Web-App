@@ -10,6 +10,7 @@ var urlsToCache = [
 
 self.addEventListener('install', (event) => {
   
+  // il metodo "event.waitUntil" avvia una promise e la usa per sapere quanto tempo richiede l'installazione e se ha avuto successo o meno
   event.waitUntil(
     
     // indichiamo un nome alla sezione di cache e dopo abbiamo una promise
@@ -17,7 +18,9 @@ self.addEventListener('install', (event) => {
       .then(function(cache) {
         console.log('Opened cache');
 
-        // con addAll aggiungiamo un array delle risorse che vogliamo inserire in cache, risorse considerate fondamentali per il funzionamento della App Shell
+        // con addAll aggiungiamo un array delle risorse che vogliamo inserire in cache, risorse considerate fondamentali per il 
+        // funzionamento della App Shell (l'HTML della pagina viene inclusa nella lista di default)
+        // in caso di fallimento nel caricamento di anche solo 1 file della lista indicata, tutto il processo d'installazione fallisce
         return cache.addAll(urlsToCache);
       })
   );
@@ -25,16 +28,16 @@ self.addEventListener('install', (event) => {
 
 
 
-// Dopo l'installazione, i Service Workers risultano attivi. Andiamo ad aggiornare il service workers per ogni pagina differente o refresh
+// Dopo l'installazione, i Service Workers risultano attivi. Andiamo ad aggiornare il service workers per ogni pagina differente
 
 // Un evento FETCH si attiva ogni volta che viene recuperata qualsiasi risorsa che potrebbe essere controllata dal Service Worker,
-// ciò i documenti all'interno dello Scope (scope di esecuzione del Serv Wor) specificato e qualsiasi risorsa a cui fa riferimento in tali documenti
-// (ad esempio se index.html effettua una richiesta per incorporare un'immagine, allora passa attraverso il suo operaio di servizio.)
+// cioé i documenti all'interno dello Scope (scope di esecuzione del Serv Wor) specificato e qualsiasi risorsa a cui fa riferimento in tali documenti
+// (ad esempio se index.html effettua una richiesta per incorporare un'immagine, allora passa attraverso il suo Service Worker.)
 
 // Per prima cosa apriamo la cache e abbiniamo la richiesta con quelle presenti nella cache. Se corrispondono, restituiamo i dati dalla cache.
 // Se la richiesta non corrisponde, reindirizziamo la richiesta al server.
 // Quando i dati vengono ricevuti correttamente dal server, restituiamo tali dati.
-// Quindi apriamo la cache e salviamo i dati qui utilizzando cache.put () in modo che sia possibile accedervi direttamente dalla cache nei seguenti tentativi.
+// Quindi apriamo la cache e salviamo i dati qui utilizzando cache.put () in modo che sia possibile accedervi direttamente dalla cache nei tentativi successivi.
 
 
 self.addEventListener('fetch', function(event) {
@@ -67,6 +70,7 @@ function requestBackend(event){
   var url = event.request.clone();
   return fetch(url).then(function(res){
       // if not a valid response send the error
+      // la richiesta basic indica se quest'ultima è stata effettuata dal nostro origine, non da componenti terzi (third party assets)
       if(!res || res.status !== 200 || res.type !== 'basic'){
           return res;
       }
