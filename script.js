@@ -1,5 +1,7 @@
 // IIFE, (acronimo di "Immediately Invoked Function Expressions")
-// Questo schema viene spesso utilizzato quando si cerca di evitare l'inquinamento dello spazio dei nomi globali, perché tutte le variabili utilizzate all'interno del IIFE (come in qualsiasi altra normale funzione) non sono visibili al di fuori del suo campo di applicazione. 
+// Questo schema viene spesso utilizzato quando si cerca di evitare l'inquinamento dello spazio dei nomi globali, 
+// perché tutte le variabili utilizzate all'interno del IIFE (come in qualsiasi altra normale funzione) non sono visibili al di fuori
+// del suo campo di applicazione. 
 (() => {
 
   // Verifica se la service worker API è avviabile nel browser dell'utente 
