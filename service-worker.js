@@ -103,7 +103,8 @@ function requestBackend(event){
 
 
 /*
-Arriva un momento dove il Service Worker và aggiornato. Per far ciò, innanzitutto aggiorniamo il "service-worker.js"
+Arriva un momento dove il Service Worker và aggiornato. Per far ciò, innanzitutto aggiorniamo il "service-worker.js", il browser si accorgerà che il
+file è stato modificato. Il nuovo Service Worker và quindi installato (con un nuovo nome) e entra in uno stato di "Waiting"
 */
 
 // L'evento "activate" viene usato soprattutto per liberarsi della vecchia cache (oltre ad altro), per liberare spazio soprattutto tenendo conto
@@ -124,7 +125,7 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then( function(cacheNames) {
       return Promise.all( cacheNames.map( function(cacheName, i) {
-          
+          // eseguiamo il loop di tutte le cache nel server, ed eliminiamo tutte le cache che non sono corrispondenti alla lista "cacheName"
           if(cacheName !== CACHE_NAME){
             return caches.delete(cacheName[i]);
           }
