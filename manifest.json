@@ -1,6 +1,9 @@
 {
-  "name": "Weather",
-  "short_name": "Weather",
+  // Il "Web app manifest" fornisce informationi sull'applicazione (quali nome, autore, icons e descrizione) in un JSON file. L'obiettivo è di permettere
+  // installazione nell'homescreen di un dispositivo della web app
+
+  "name": "Weather", // indica il testo nel banner d'installazione
+  "short_name": "Weather", //indica il testo da usare nella HomeScreen
   "icons": [{
     "src": "images/icons/icon-128x128.png",
       "sizes": "128x128",
@@ -22,8 +25,9 @@
       "sizes": "256x256",
       "type": "image/png"
     }],
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2"
+  "start_url": "/index.html", // se non indicato, verrà utilizzata la pagina attualmente in uso
+  "display": "standalone", // indica la modalità di visualizzazione in caso di apertura dalla icona in HomeScreen (può essere standalone come una vera app o broowser)
+  "background_color": "#3E4EB8", // background utilizzato come splash screen (appena prima dell'apertura della App Shell)
+  "theme_color": "#2F3BA2", // questa proprietà imposta il colore della toolbar (barra url del browser)
+  "orientation": "portrait" // indica l'orientamento della pagina
 }
